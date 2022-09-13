@@ -15,7 +15,8 @@
 //==============================================================================
 
 extern juce::Slider Volume;
-auto currentVolume=1.0f;
+//auto currentVolume=1.0f;
+float currentVolume;
 
 NewProjectAudioProcessor::NewProjectAudioProcessor()
 #ifndef JucePlugin_PreferredChannelConfigurations
@@ -106,6 +107,7 @@ void NewProjectAudioProcessor::prepareToPlay (double sampleRate, int samplesPerB
 
     //initialize the volume value as 0.5
     sampleCountDown = 0;
+    //currentVolume = Volume.getValue();
     
     
 }
@@ -149,8 +151,12 @@ void NewProjectAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, j
     auto totalNumInputChannels  = getTotalNumInputChannels();
     auto totalNumOutputChannels = getTotalNumOutputChannels();
 
-    //get volume value and copy it to a local value named volumeCopy
+    //get volume value and copy it to a local variable named volumeCopy
     auto volumeCopy = Volume.getValue();
+    //juce::Slider::Listener* volumeListener;
+    //Volume.addListener(volumeListener);
+    
+    auto gain = Volume.getValue();
 
     // In case we have more outputs than inputs, this code clears any output
     // channels that didn't contain input data, (because these aren't
@@ -171,10 +177,11 @@ void NewProjectAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, j
     {
         auto* channelData = buffer.getWritePointer (channel);
         volumeCopy = currentVolume;
-        //*channelData = (* channelData)*volumeCopy;
         
+        buffer.applyGain(channel, 0, buffer.getNumSamples(), gain);
+        //buffer.applyGain(channel, 0, buffer.getNumSamples(), volumeCopy);
         //applyGain(float gain)
-        buffer.applyGain(volumeCopy);
+        //buffer.applyGain(volumeCopy);
         
         // ..do something to the data...
         

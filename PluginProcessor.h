@@ -57,14 +57,7 @@ public:
     void setStateInformation(const void* data, int sizeInBytes) override;
 
     
-    //class effectParameters:juce::AudioProcessorParameter
-    //{
-    //public:
-    //    float volume;
-    //};
-    ////juce::AudioProcessorParameter effectParameters = new juce::AudioProcessorParameter;
-    //effectParameters parameters = new effectParameters();
-private:                //parameters can be declared here. parameters can be defined here. and set get processes can be done in PluginProcessor.cpp / void NewProjectAudioProcessor::getStateInformation (juce::MemoryBlock& destData)   void NewProjectAudioProcessor::setStateInformation (juce::MemoryBlock& destData)
+private:                //parameters can be declared here. set get fuctions: PluginProcessor.cpp / void NewProjectAudioProcessor::getStateInformation (juce::MemoryBlock& destData)   void NewProjectAudioProcessor::setStateInformation (juce::MemoryBlock& destData)
     //==============================================================================
     juce::AudioParameterFloat* volume;
     int sampleCountDown;
